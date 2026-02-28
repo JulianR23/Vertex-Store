@@ -3,7 +3,7 @@ import { seedProducts } from './products.seed';
 
 const runSeeds = async (): Promise<void> => {
   await AppDataSource.initialize();
-  console.log('📦 Running database seeds...');
+  console.log('Running database seeds...');
   await seedProducts(AppDataSource);
   console.log('✅ All seeds completed');
   await AppDataSource.destroy();
