@@ -23,7 +23,7 @@ const LoginModal = ({ open, onClose, onSwitchToRegister, onSuccess }: LoginModal
 
   const handleSubmit = async () => {
     if (!email || !password) {
-      setError('Completa todos los campos');
+      setError('Please fill in all fields');
       return;
     }
     try {
@@ -34,14 +34,14 @@ const LoginModal = ({ open, onClose, onSwitchToRegister, onSuccess }: LoginModal
       }));
       onSuccess();
     } catch {
-      setError('Credenciales inválidas');
+      setError('Invalid credentials');
     }
   };
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem', pb: 0 }}>
-        Iniciar sesión
+        Sign in
       </DialogTitle>
       <DialogContent>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 2 }}>
@@ -54,7 +54,7 @@ const LoginModal = ({ open, onClose, onSwitchToRegister, onSuccess }: LoginModal
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
-            label="Contraseña"
+            label="Password"
             type="password"
             fullWidth
             value={password}
@@ -68,16 +68,16 @@ const LoginModal = ({ open, onClose, onSwitchToRegister, onSuccess }: LoginModal
             onClick={handleSubmit}
             disabled={isLoading}
           >
-            {isLoading ? <CircularProgress size={22} color="inherit" /> : 'Ingresar'}
+            {isLoading ? <CircularProgress size={22} color="inherit" /> : 'Sign in'}
           </Button>
           <Typography variant="body2" textAlign="center" color="text.secondary">
-            ¿No tienes cuenta?{' '}
+            Don't have an account?{' '}
             <Box
               component="span"
               sx={{ color: 'primary.main', cursor: 'pointer', fontWeight: 600 }}
               onClick={onSwitchToRegister}
             >
-              Regístrate
+              Sign up
             </Box>
           </Typography>
         </Box>
