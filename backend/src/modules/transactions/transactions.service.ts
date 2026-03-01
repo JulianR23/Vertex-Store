@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import {
@@ -6,10 +6,10 @@ import {
   TransactionStatus,
 } from '../../database/entities/transaction.entity';
 import { DeliveryEntity, DeliveryStatus } from '../../database/entities/delivery.entity';
+import { CustomerEntity } from '../../database/entities/customer.entity';
 import { CreateTransactionDto } from './models/dto/create-transaction.dto';
 import { UpdateTransactionDto } from './models/dto/update-transaction.dto';
 import { TransactionResponse } from './models/types/transaction-response.type';
-import { CustomersService } from '../customers/customers.service';
 import { ProductsService } from '../products/products.service';
 import { FEE_CONSTANTS, CURRENCY } from '../../shared/constants/fees.constants';
 import { generateTransactionReference } from '../../shared/utils/reference.util';
@@ -21,26 +21,23 @@ export class TransactionsService {
   constructor(
     @InjectRepository(TransactionEntity)
     private readonly transactionRepository: Repository<TransactionEntity>,
-    private readonly customersService: CustomersService,
     private readonly productsService: ProductsService,
     private readonly dataSource: DataSource,
   ) {}
 
-  /**
-   * Creates a PENDING transaction with associated customer and delivery.
-   * Uses ACID transaction to ensure atomicity.
-   */
-  async createPending(dto: CreateTransactionDto): Promise<Result<TransactionResponse, string>> {
+  async createPending(
+    dto: CreateTransactionDto,
+    customer: CustomerEntity,
+  ): Promise<Result<TransactionResponse, string>> {
     const stockResult = await this.productsService.hasStock(dto.productId);
     if (!stockResult.isSuccess) return fail(stockResult.error);
     if (!stockResult.value) return fail('Product is out of stock');
 
-    const customerResult = await this.customersService.create(dto.customer);
-    if (!customerResult.isSuccess) return fail(customerResult.error);
-
     const product = await this.productsService.findById(dto.productId);
     const totalAmountInCents =
-      product.priceInCents + FEE_CONSTANTS.BASE_FEE_IN_CENTS + FEE_CONSTANTS.DELIVERY_FEE_IN_CENTS;
+      product.priceInCents +
+      FEE_CONSTANTS.BASE_FEE_IN_CENTS +
+      FEE_CONSTANTS.DELIVERY_FEE_IN_CENTS;
 
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
@@ -58,7 +55,7 @@ export class TransactionsService {
         cardLastFour: extractLastFour(dto.card.cardNumber),
         cardBrand: detectCardBrand(dto.card.cardNumber),
         productId: dto.productId,
-        customerId: customerResult.value.id,
+        customerId: customer.id,
       });
       const savedTransaction = await queryRunner.manager.save(transaction);
 
@@ -67,7 +64,7 @@ export class TransactionsService {
         city: dto.delivery.city,
         department: dto.delivery.department,
         postalCode: dto.delivery.postalCode,
-        recipientName: dto.customer.fullName,
+        recipientName: customer.fullName,
         status: DeliveryStatus.PENDING,
         transactionId: savedTransaction.id,
       });
@@ -84,9 +81,6 @@ export class TransactionsService {
     }
   }
 
-  /**
-   * Updates a transaction status after Wompi payment response.
-   */
   async updateStatus(
     id: string,
     dto: UpdateTransactionDto,
@@ -96,11 +90,9 @@ export class TransactionsService {
     if (transaction.status !== TransactionStatus.PENDING) {
       return fail(`Transaction is already ${transaction.status}`);
     }
-
     transaction.status = dto.status;
     if (dto.wompiTransactionId) transaction.wompiTransactionId = dto.wompiTransactionId;
     if (dto.failureReason) transaction.failureReason = dto.failureReason;
-
     await this.transactionRepository.save(transaction);
 
     if (dto.status === TransactionStatus.APPROVED) {
@@ -115,9 +107,6 @@ export class TransactionsService {
     return ok(updated);
   }
 
-  /**
-   * Retrieves a transaction by ID with all relations.
-   */
   async findById(id: string): Promise<TransactionResponse> {
     const transaction = await this.transactionRepository.findOne({
       where: { id },

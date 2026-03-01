@@ -10,6 +10,7 @@ const mockCustomer: CustomerEntity = {
   email: 'juan@test.com',
   phoneNumber: '+573001234567',
   documentNumber: '1234567890',
+  passwordHash: '',
   createdAt: new Date(),
   updatedAt: new Date(),
   transactions: [],

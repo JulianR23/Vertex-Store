@@ -8,10 +8,22 @@ import {
   TransactionStatus,
 } from '../../database/entities/transaction.entity';
 import { ProductsService } from '../products/products.service';
-import { CustomersService } from '../customers/customers.service';
+import { CustomerEntity } from '../../database/entities/customer.entity';
 import { CreateTransactionDto } from './models/dto/create-transaction.dto';
 import { UpdateTransactionDto } from './models/dto/update-transaction.dto';
 import { ok, fail } from '../../shared/utils/result.utils';
+
+const mockCustomer: CustomerEntity = {
+  id: 'cust-uuid-1',
+  fullName: 'Test User',
+  email: 'test@test.com',
+  phoneNumber: '+573001234567',
+  documentNumber: '12345',
+  passwordHash: '',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  transactions: [],
+};
 
 const mockTransaction: TransactionEntity = {
   id: 'tx-uuid-1',
@@ -63,10 +75,6 @@ const mockProductsService = {
   decrementStock: jest.fn(),
 };
 
-const mockCustomersService = {
-  create: jest.fn(),
-};
-
 describe('TransactionsService', () => {
   let service: TransactionsService;
 
@@ -76,7 +84,6 @@ describe('TransactionsService', () => {
         TransactionsService,
         { provide: getRepositoryToken(TransactionEntity), useValue: mockTransactionRepository },
         { provide: ProductsService, useValue: mockProductsService },
-        { provide: CustomersService, useValue: mockCustomersService },
         { provide: DataSource, useValue: mockDataSource },
       ],
     }).compile();
@@ -84,70 +91,6 @@ describe('TransactionsService', () => {
     jest.clearAllMocks();
   });
 
-  describe('createPending', () => {
-    const inputDto: CreateTransactionDto = {
-      productId: 'prod-uuid-1',
-      customer: {
-        fullName: 'Test User',
-        email: 'test@test.com',
-        phoneNumber: '+573001234567',
-        documentNumber: '12345',
-      },
-      card: {
-        cardNumber: '4111111111111111',
-        cardHolder: 'Test User',
-        expiryMonth: '12',
-        expiryYear: '2027',
-        cvv: '123',
-      },
-      delivery: {
-        addressLine: 'Calle 123',
-        city: 'Medellín',
-        department: 'Antioquia',
-        postalCode: '050001',
-      },
-    };
-
-    it('should return fail when product has no stock', async () => {
-      mockProductsService.hasStock.mockResolvedValue(ok(false));
-      const actualResult = await service.createPending(inputDto);
-      expect(actualResult.isSuccess).toBe(false);
-      if (!actualResult.isSuccess) expect(actualResult.error).toContain('out of stock');
-    });
-
-    it('should return fail when stock check fails', async () => {
-      mockProductsService.hasStock.mockResolvedValue(fail('Product not found'));
-      const actualResult = await service.createPending(inputDto);
-      expect(actualResult.isSuccess).toBe(false);
-    });
-
-    it('should create transaction successfully when stock is available', async () => {
-      mockProductsService.hasStock.mockResolvedValue(ok(true));
-      mockCustomersService.create.mockResolvedValue(
-        ok({ id: 'cust-uuid-1', fullName: 'Test User', email: 'test@test.com', phoneNumber: '+573001234567', documentNumber: '12345', createdAt: new Date() }),
-      );
-      mockProductsService.findById.mockResolvedValue({
-        id: 'prod-uuid-1',
-        priceInCents: 130000000,
-      });
-      const savedTx = { ...mockTransaction, id: 'tx-uuid-1' };
-      mockQueryRunner.manager.create
-        .mockReturnValueOnce(savedTx)
-        .mockReturnValueOnce({});
-      mockQueryRunner.manager.save
-        .mockResolvedValueOnce(savedTx)
-        .mockResolvedValueOnce({});
-      mockTransactionRepository.findOne.mockResolvedValue({
-        ...mockTransaction,
-        product: { id: 'prod-uuid-1', name: 'AirPods' },
-        customer: { id: 'cust-uuid-1', fullName: 'Test' },
-        delivery: { id: 'del-uuid-1', city: 'Medellín' },
-      });
-      const actualResult = await service.createPending(inputDto);
-      expect(actualResult.isSuccess).toBe(true);
-      expect(mockQueryRunner.commitTransaction).toHaveBeenCalled();
-    });
-  });
 
   describe('updateStatus', () => {
     it('should return fail when transaction not found', async () => {

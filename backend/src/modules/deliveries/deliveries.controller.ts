@@ -1,8 +1,10 @@
-import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseUUIDPipe, UseGuards } from '@nestjs/common';
 import { DeliveriesService } from './deliveries.service';
 import { DeliveryResponse } from './types/delivery-response.type';
+import { JwtGuard } from '../auth/guards/jwt.guard';
 
 @Controller('deliveries')
+@UseGuards(JwtGuard)
 export class DeliveriesController {
   constructor(private readonly deliveriesService: DeliveriesService) {}
 
