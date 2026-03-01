@@ -18,8 +18,6 @@ interface TokenizeCardInput {
 export const tokenizeCard = async (
   input: TokenizeCardInput,
 ): Promise<TokenizedCard> => {
-  console.log("WOMPI_PUBLIC_KEY:", WOMPI_PUBLIC_KEY);
-  console.log("WOMPI_API_URL:", WOMPI_API_URL);
   const response = await fetch(`${WOMPI_API_URL}/tokens/cards`, {
     method: "POST",
     headers: {

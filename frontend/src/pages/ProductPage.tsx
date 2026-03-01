@@ -31,9 +31,6 @@ const ProductPage = () => {
   const { data, isLoading, isError } = useGetProductsQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
-  console.log("Products data:", data);
-  console.log("Products isLoading:", isLoading);
-  console.log("Products isError:", isError);
 
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);

@@ -14,6 +14,10 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME ?? 'vertex_user',
   password: process.env.DB_PASSWORD ?? 'vertex_password',
   database: process.env.DB_NAME ?? 'vertex_store',
+  ssl:
+    process.env.NODE_ENV === 'production'
+      ? { rejectUnauthorized: false }
+      : false,
   entities: [ProductEntity, CustomerEntity, TransactionEntity, DeliveryEntity],
   migrations: ['src/database/migrations/*.ts'],
   synchronize: false,

@@ -18,8 +18,21 @@ import { DeliveryEntity } from './entities/delivery.entity';
         username: configService.get<string>('DB_USERNAME', 'vertex_user'),
         password: configService.get<string>('DB_PASSWORD', 'vertex_password'),
         database: configService.get<string>('DB_NAME', 'vertex_store'),
-        entities: [ProductEntity, CustomerEntity, TransactionEntity, DeliveryEntity],
-        synchronize: configService.get<string>('TYPEORM_SYNCHRONIZE', 'false') === 'true',
+        ssl:
+          configService.get<string>('NODE_ENV') === 'production'
+            ? { rejectUnauthorized: false }
+            : false,
+        entities: [
+          ProductEntity,
+          CustomerEntity,
+          TransactionEntity,
+          DeliveryEntity,
+        ],
+        synchronize:
+          configService.get<string>('NODE_ENV') === 'production'
+            ? true
+            : configService.get<string>('TYPEORM_SYNCHRONIZE', 'false') ===
+              'true',
         logging: false,
       }),
     }),
