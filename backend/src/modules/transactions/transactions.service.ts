@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import {
@@ -6,41 +6,51 @@ import {
   TransactionStatus,
 } from '../../database/entities/transaction.entity';
 import { DeliveryEntity, DeliveryStatus } from '../../database/entities/delivery.entity';
+import { CustomerEntity } from '../../database/entities/customer.entity';
 import { CreateTransactionDto } from './models/dto/create-transaction.dto';
 import { UpdateTransactionDto } from './models/dto/update-transaction.dto';
 import { TransactionResponse } from './models/types/transaction-response.type';
-import { CustomersService } from '../customers/customers.service';
 import { ProductsService } from '../products/products.service';
+import { WompiService } from '../wompi/wompi.service';
 import { FEE_CONSTANTS, CURRENCY } from '../../shared/constants/fees.constants';
 import { generateTransactionReference } from '../../shared/utils/reference.util';
-import { detectCardBrand, extractLastFour } from '../../shared/utils/card.util';
 import { Result, ok, fail } from '../../shared/utils/result.utils';
 
 @Injectable()
 export class TransactionsService {
+  private readonly logger = new Logger(TransactionsService.name);
+
   constructor(
     @InjectRepository(TransactionEntity)
     private readonly transactionRepository: Repository<TransactionEntity>,
-    private readonly customersService: CustomersService,
     private readonly productsService: ProductsService,
+    private readonly wompiService: WompiService,
     private readonly dataSource: DataSource,
   ) {}
 
-  /**
-   * Creates a PENDING transaction with associated customer and delivery.
-   * Uses ACID transaction to ensure atomicity.
-   */
-  async createPending(dto: CreateTransactionDto): Promise<Result<TransactionResponse, string>> {
+  async createPending(
+    dto: CreateTransactionDto,
+    customer: CustomerEntity,
+  ): Promise<Result<TransactionResponse, string>> {
     const stockResult = await this.productsService.hasStock(dto.productId);
     if (!stockResult.isSuccess) return fail(stockResult.error);
     if (!stockResult.value) return fail('Product is out of stock');
 
-    const customerResult = await this.customersService.create(dto.customer);
-    if (!customerResult.isSuccess) return fail(customerResult.error);
-
     const product = await this.productsService.findById(dto.productId);
     const totalAmountInCents =
-      product.priceInCents + FEE_CONSTANTS.BASE_FEE_IN_CENTS + FEE_CONSTANTS.DELIVERY_FEE_IN_CENTS;
+      product.priceInCents +
+      FEE_CONSTANTS.BASE_FEE_IN_CENTS +
+      FEE_CONSTANTS.DELIVERY_FEE_IN_CENTS;
+
+    const reference = generateTransactionReference();
+    const signature = this.wompiService.generateSignature(
+      reference,
+      totalAmountInCents,
+      CURRENCY,
+    );
+
+    const acceptanceResult = await this.wompiService.fetchAcceptanceToken();
+    if (!acceptanceResult.isSuccess) return fail(acceptanceResult.error);
 
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
@@ -48,17 +58,15 @@ export class TransactionsService {
 
     try {
       const transaction = queryRunner.manager.create(TransactionEntity, {
-        reference: generateTransactionReference(),
+        reference,
         status: TransactionStatus.PENDING,
         productAmountInCents: product.priceInCents,
         baseFeeInCents: FEE_CONSTANTS.BASE_FEE_IN_CENTS,
         deliveryFeeInCents: FEE_CONSTANTS.DELIVERY_FEE_IN_CENTS,
         totalAmountInCents,
         currency: CURRENCY,
-        cardLastFour: extractLastFour(dto.card.cardNumber),
-        cardBrand: detectCardBrand(dto.card.cardNumber),
         productId: dto.productId,
-        customerId: customerResult.value.id,
+        customerId: customer.id,
       });
       const savedTransaction = await queryRunner.manager.save(transaction);
 
@@ -67,12 +75,39 @@ export class TransactionsService {
         city: dto.delivery.city,
         department: dto.delivery.department,
         postalCode: dto.delivery.postalCode,
-        recipientName: dto.customer.fullName,
+        recipientName: customer.fullName,
         status: DeliveryStatus.PENDING,
         transactionId: savedTransaction.id,
       });
       await queryRunner.manager.save(delivery);
       await queryRunner.commitTransaction();
+
+      const wompiResult = await this.wompiService.createTransaction({
+        acceptanceToken: acceptanceResult.value,
+        amountInCents: totalAmountInCents,
+        currency: CURRENCY,
+        customerEmail: customer.email,
+        reference,
+        signature,
+        paymentMethod: {
+          type: 'CARD',
+          token: dto.card.token,
+          installments: dto.card.installments,
+        },
+        customerIp: dto.customerIp,
+      });
+
+      if (!wompiResult.isSuccess) {
+        await this.transactionRepository.update(savedTransaction.id, {
+          status: TransactionStatus.FAILED,
+          failureReason: wompiResult.error,
+        });
+        return fail(wompiResult.error);
+      }
+
+      await this.transactionRepository.update(savedTransaction.id, {
+        wompiTransactionId: wompiResult.value.id,
+      });
 
       const fullTransaction = await this.findById(savedTransaction.id);
       return ok(fullTransaction);
@@ -84,9 +119,44 @@ export class TransactionsService {
     }
   }
 
-  /**
-   * Updates a transaction status after Wompi payment response.
-   */
+  async findById(id: string): Promise<TransactionResponse> {
+    const transaction = await this.transactionRepository.findOne({
+      where: { id },
+      relations: ['product', 'customer', 'delivery'],
+    });
+    if (!transaction) throw new NotFoundException(`Transaction ${id} not found`);
+
+    if (
+      transaction.status === TransactionStatus.PENDING &&
+      transaction.wompiTransactionId
+    ) {
+      await this.syncStatusFromWompi(transaction);
+      const refreshed = await this.transactionRepository.findOne({
+        where: { id },
+        relations: ['product', 'customer', 'delivery'],
+      });
+      return this.toResponse(refreshed!);
+    }
+
+    return this.toResponse(transaction);
+  }
+
+  async handleWompiWebhook(
+    wompiTransactionId: string,
+    wompiStatus: string,
+  ): Promise<Result<void, string>> {
+    const transaction = await this.transactionRepository.findOne({
+      where: { wompiTransactionId },
+    });
+    if (!transaction) {
+      return fail(`No transaction found for wompiId ${wompiTransactionId}`);
+    }
+    if (transaction.status !== TransactionStatus.PENDING) {
+      return ok(undefined);
+    }
+    return this.applyFinalStatus(transaction, wompiStatus);
+  }
+
   async updateStatus(
     id: string,
     dto: UpdateTransactionDto,
@@ -96,11 +166,9 @@ export class TransactionsService {
     if (transaction.status !== TransactionStatus.PENDING) {
       return fail(`Transaction is already ${transaction.status}`);
     }
-
     transaction.status = dto.status;
     if (dto.wompiTransactionId) transaction.wompiTransactionId = dto.wompiTransactionId;
     if (dto.failureReason) transaction.failureReason = dto.failureReason;
-
     await this.transactionRepository.save(transaction);
 
     if (dto.status === TransactionStatus.APPROVED) {
@@ -115,16 +183,41 @@ export class TransactionsService {
     return ok(updated);
   }
 
-  /**
-   * Retrieves a transaction by ID with all relations.
-   */
-  async findById(id: string): Promise<TransactionResponse> {
-    const transaction = await this.transactionRepository.findOne({
-      where: { id },
-      relations: ['product', 'customer', 'delivery'],
+  private async syncStatusFromWompi(transaction: TransactionEntity): Promise<void> {
+    const statusResult = await this.wompiService.fetchTransactionStatus(
+      transaction.wompiTransactionId!,
+    );
+    if (!statusResult.isSuccess) return;
+    if (statusResult.value === 'PENDING') return;
+    await this.applyFinalStatus(transaction, statusResult.value);
+  }
+
+  private async applyFinalStatus(
+    transaction: TransactionEntity,
+    wompiStatus: string,
+  ): Promise<Result<void, string>> {
+    const isApproved = wompiStatus === 'APPROVED';
+    const isFailed = ['DECLINED', 'VOIDED', 'ERROR'].includes(wompiStatus);
+    if (!isApproved && !isFailed) return ok(undefined);
+
+    const newStatus = isApproved
+      ? TransactionStatus.APPROVED
+      : TransactionStatus.FAILED;
+
+    await this.transactionRepository.update(transaction.id, {
+      status: newStatus,
+      failureReason: isFailed ? wompiStatus : null,
     });
-    if (!transaction) throw new NotFoundException(`Transaction ${id} not found`);
-    return this.toResponse(transaction);
+
+    if (isApproved) {
+      await this.productsService.decrementStock(transaction.productId);
+      await this.dataSource.getRepository(DeliveryEntity).update(
+        { transactionId: transaction.id },
+        { status: DeliveryStatus.ASSIGNED },
+      );
+    }
+
+    return ok(undefined);
   }
 
   private readonly toResponse = (t: TransactionEntity): TransactionResponse => ({
