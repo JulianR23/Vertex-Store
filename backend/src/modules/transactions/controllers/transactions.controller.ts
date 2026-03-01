@@ -10,12 +10,12 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
-import { TransactionsService } from './transactions.service';
-import { CreateTransactionDto } from './models/dto/create-transaction.dto';
-import { UpdateTransactionDto } from './models/dto/update-transaction.dto';
-import { TransactionResponse } from './models/types/transaction-response.type';
-import { JwtGuard } from '../auth/guards/jwt.guard';
-import { CustomerEntity } from '../../database/entities/customer.entity';
+import { TransactionsService } from '../transactions.service';
+import { CreateTransactionDto } from '../models/dto/create-transaction.dto';
+import { UpdateTransactionDto } from '../models/dto/update-transaction.dto';
+import { TransactionResponse } from '../models/types/transaction-response.type';
+import { JwtGuard } from '../../auth/guards/jwt.guard';
+import { CustomerEntity } from '../../../database/entities/customer.entity';
 
 interface RequestWithCustomer extends Request {
   user: CustomerEntity;

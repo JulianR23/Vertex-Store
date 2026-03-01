@@ -1,35 +1,24 @@
 import {
+  IsInt,
   IsNotEmpty,
   IsString,
   IsUUID,
   Length,
   ValidateNested,
-  Matches,
+  Min,
+  Max,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CardInfoDto {
   @IsString()
   @IsNotEmpty()
-  @Matches(/^\d{13,19}$/, { message: 'cardNumber must be 13-19 digits' })
-  readonly cardNumber: string;
+  readonly token: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @Length(2, 100)
-  readonly cardHolder: string;
-
-  @IsString()
-  @Matches(/^(0[1-9]|1[0-2])$/, { message: 'expiryMonth must be 01-12' })
-  readonly expiryMonth: string;
-
-  @IsString()
-  @Matches(/^\d{4}$/, { message: 'expiryYear must be 4 digits' })
-  readonly expiryYear: string;
-
-  @IsString()
-  @Matches(/^\d{3,4}$/, { message: 'cvv must be 3 or 4 digits' })
-  readonly cvv: string;
+  @IsInt()
+  @Min(1)
+  @Max(36)
+  readonly installments: number;
 }
 
 export class DeliveryInfoDto {
@@ -64,4 +53,8 @@ export class CreateTransactionDto {
   @ValidateNested()
   @Type(() => DeliveryInfoDto)
   readonly delivery: DeliveryInfoDto;
+
+  @IsString()
+  @IsNotEmpty()
+  readonly customerIp: string;
 }
