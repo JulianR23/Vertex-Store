@@ -1,11 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
 import { CustomerEntity } from '../../database/entities/customer.entity';
 import { RegisterDto } from './models/dto/register.dto';
 import { LoginDto } from './models/dto/login.dto';
+
+jest.mock('bcrypt', () => ({
+  hash: jest.fn(),
+  compare: jest.fn(),
+}));
+
+import * as bcrypt from 'bcrypt';
 
 const mockCustomer: CustomerEntity = {
   id: 'cust-uuid-1',
@@ -36,7 +42,10 @@ describe('AuthService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
-        { provide: getRepositoryToken(CustomerEntity), useValue: mockRepository },
+        {
+          provide: getRepositoryToken(CustomerEntity),
+          useValue: mockRepository,
+        },
         { provide: JwtService, useValue: mockJwtService },
       ],
     }).compile();
@@ -55,6 +64,7 @@ describe('AuthService', () => {
 
     it('should register a new customer successfully', async () => {
       mockRepository.findOne.mockResolvedValue(null);
+      (bcrypt.hash as jest.Mock).mockResolvedValue('$2b$10$hashedpassword');
       mockRepository.create.mockReturnValue(mockCustomer);
       mockRepository.save.mockResolvedValue(mockCustomer);
       const actualResult = await service.register(inputDto);
@@ -83,7 +93,7 @@ describe('AuthService', () => {
 
     it('should login successfully with valid credentials', async () => {
       mockRepository.findOne.mockResolvedValue(mockCustomer);
-      jest.spyOn(bcrypt, 'compare').mockResolvedValue(true as never);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(true);
       const actualResult = await service.login(inputDto);
       expect(actualResult.isSuccess).toBe(true);
       if (actualResult.isSuccess) {
@@ -102,7 +112,7 @@ describe('AuthService', () => {
 
     it('should return fail when password is incorrect', async () => {
       mockRepository.findOne.mockResolvedValue(mockCustomer);
-      jest.spyOn(bcrypt, 'compare').mockResolvedValue(false as never);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(false);
       const actualResult = await service.login(inputDto);
       expect(actualResult.isSuccess).toBe(false);
       if (!actualResult.isSuccess) {

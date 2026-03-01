@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1772407027793" clover="3.2.0">
+  <project timestamp="1772407027794" name="All files">
+    <metrics statements="411" coveredstatements="374" conditionals="212" coveredconditionals="180" methods="90" coveredmethods="72" elements="713" coveredelements="626" complexity="0" loc="411" ncloc="411" packages="10" files="19" classes="19"/>
+    <package name="src">
+      <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
+      <file name="App.tsx" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\App.tsx">
+        <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="8" type="stmt"/>
+        <line num="12" count="8" type="stmt"/>
+        <line num="13" count="8" type="stmt"/>
+        <line num="14" count="8" type="stmt"/>
+        <line num="16" count="8" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components.auth">
+      <metrics statements="53" coveredstatements="51" conditionals="18" coveredconditionals="15" methods="13" coveredmethods="11"/>
+      <file name="LoginModal.tsx" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\components\auth\LoginModal.tsx">
+        <metrics statements="26" coveredstatements="25" conditionals="10" coveredconditionals="8" methods="6" coveredmethods="5"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="79" type="stmt"/>
+        <line num="19" count="79" type="stmt"/>
+        <line num="20" count="79" type="stmt"/>
+        <line num="21" count="79" type="stmt"/>
+        <line num="22" count="79" type="stmt"/>
+        <line num="24" count="79" type="stmt"/>
+        <line num="25" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="41" count="79" type="stmt"/>
+        <line num="48" count="0" type="cond" truecount="2" falsecount="0"/>
+        <line num="54" count="39" type="stmt"/>
+        <line num="61" count="31" type="stmt"/>
+        <line num="62" count="31" type="cond" truecount="1" falsecount="1"/>
+        <line num="89" count="1" type="stmt"/>
+      </file>
+      <file name="RegisterModal.tsx" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\components\auth\RegisterModal.tsx">
+        <metrics statements="27" coveredstatements="26" conditionals="8" coveredconditionals="7" methods="7" coveredmethods="6"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="221" type="stmt"/>
+        <line num="19" count="221" type="stmt"/>
+        <line num="20" count="221" type="stmt"/>
+        <line num="21" count="221" type="stmt"/>
+        <line num="29" count="1105" type="stmt"/>
+        <line num="30" count="210" type="stmt"/>
+        <line num="33" count="221" type="stmt"/>
+        <line num="34" count="21" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="38" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="54" count="221" type="stmt"/>
+        <line num="61" count="0" type="cond" truecount="2" falsecount="0"/>
+        <line num="92" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components.layout">
+      <metrics statements="17" coveredstatements="17" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+      <file name="AppLayout.tsx" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\components\layout\AppLayout.tsx">
+        <metrics statements="17" coveredstatements="17" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="13" count="175" type="stmt"/>
+        <line num="14" count="175" type="stmt"/>
+        <line num="15" count="175" type="stmt"/>
+        <line num="17" count="175" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="175" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="67" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.pages">
+      <metrics statements="205" coveredstatements="197" conditionals="164" coveredconditionals="141" methods="41" coveredmethods="35"/>
+      <file name="CheckoutPage.tsx" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\pages\CheckoutPage.tsx">
+        <metrics statements="73" coveredstatements="70" conditionals="60" coveredconditionals="49" methods="15" coveredmethods="12"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="118" type="stmt"/>
+        <line num="40" count="118" type="stmt"/>
+        <line num="41" count="118" type="stmt"/>
+        <line num="43" count="118" type="stmt"/>
+        <line num="44" count="118" type="stmt"/>
+        <line num="46" count="118" type="stmt"/>
+        <line num="55" count="118" type="stmt"/>
+        <line num="62" count="118" type="stmt"/>
+        <line num="65" count="590" type="stmt"/>
+        <line num="66" count="86" type="stmt"/>
+        <line num="67" count="86" type="cond" truecount="2" falsecount="0"/>
+        <line num="68" count="40" type="stmt"/>
+        <line num="69" count="46" type="cond" truecount="2" falsecount="0"/>
+        <line num="70" count="26" type="stmt"/>
+        <line num="72" count="86" type="stmt"/>
+        <line num="76" count="472" type="stmt"/>
+        <line num="77" count="9" type="stmt"/>
+        <line num="80" count="118" type="stmt"/>
+        <line num="81" count="7" type="stmt"/>
+        <line num="82" count="7" type="stmt"/>
+        <line num="83" count="7" type="stmt"/>
+        <line num="84" count="7" type="stmt"/>
+        <line num="85" count="7" type="stmt"/>
+        <line num="88" count="7" type="cond" truecount="3" falsecount="0"/>
+        <line num="89" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="91" count="7" type="cond" truecount="2" falsecount="1"/>
+        <line num="93" count="7" type="stmt"/>
+        <line num="102" count="118" type="stmt"/>
+        <line num="103" count="4" type="stmt"/>
+        <line num="110" count="118" type="stmt"/>
+        <line num="111" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="112" count="3" type="stmt"/>
+        <line num="113" count="3" type="stmt"/>
+        <line num="114" count="3" type="stmt"/>
+        <line num="115" count="3" type="stmt"/>
+        <line num="116" count="3" type="stmt"/>
+        <line num="118" count="3" type="cond" truecount="5" falsecount="0"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="120" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="127" count="1" type="stmt"/>
+        <line num="129" count="1" type="stmt"/>
+        <line num="131" count="3" type="stmt"/>
+        <line num="133" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="134" count="1" type="stmt"/>
+        <line num="135" count="1" type="stmt"/>
+        <line num="137" count="3" type="stmt"/>
+        <line num="138" count="3" type="stmt"/>
+        <line num="139" count="3" type="stmt"/>
+        <line num="140" count="3" type="stmt"/>
+        <line num="147" count="1" type="stmt"/>
+        <line num="163" count="1" type="stmt"/>
+        <line num="165" count="2" type="stmt"/>
+        <line num="169" count="3" type="stmt"/>
+        <line num="173" count="118" type="stmt"/>
+        <line num="177" count="1" type="stmt"/>
+        <line num="188" count="0" type="stmt"/>
+        <line num="282" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="283" count="0" type="stmt"/>
+        <line num="288" count="708" type="stmt"/>
+        <line num="472" count="1" type="stmt"/>
+      </file>
+      <file name="ProductPage.tsx" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\pages\ProductPage.tsx">
+        <metrics statements="46" coveredstatements="44" conditionals="24" coveredconditionals="22" methods="10" coveredmethods="8"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="17" type="stmt"/>
+        <line num="29" count="17" type="stmt"/>
+        <line num="30" count="17" type="stmt"/>
+        <line num="31" count="17" type="stmt"/>
+        <line num="35" count="17" type="stmt"/>
+        <line num="36" count="17" type="stmt"/>
+        <line num="37" count="17" type="stmt"/>
+        <line num="41" count="17" type="stmt"/>
+        <line num="42" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="43" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="44" count="4" type="stmt"/>
+        <line num="45" count="4" type="stmt"/>
+        <line num="46" count="4" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="59" count="17" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="75" count="17" type="stmt"/>
+        <line num="95" count="3" type="stmt"/>
+        <line num="107" count="30" type="stmt"/>
+        <line num="203" count="5" type="stmt"/>
+        <line num="217" count="0" type="stmt"/>
+        <line num="219" count="2" type="stmt"/>
+        <line num="220" count="2" type="stmt"/>
+        <line num="226" count="0" type="stmt"/>
+        <line num="228" count="1" type="stmt"/>
+        <line num="229" count="1" type="stmt"/>
+        <line num="237" count="1" type="stmt"/>
+      </file>
+      <file name="ResultPage.tsx" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\pages\ResultPage.tsx">
+        <metrics statements="43" coveredstatements="41" conditionals="44" coveredconditionals="39" methods="8" coveredmethods="8"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="20" type="stmt"/>
+        <line num="29" count="20" type="stmt"/>
+        <line num="30" count="20" type="stmt"/>
+        <line num="31" count="20" type="stmt"/>
+        <line num="32" count="20" type="stmt"/>
+        <line num="34" count="20" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="20" type="cond" truecount="1" falsecount="2"/>
+        <line num="39" count="20" type="stmt"/>
+        <line num="46" count="20" type="stmt"/>
+        <line num="48" count="20" type="cond" truecount="2" falsecount="0"/>
+        <line num="49" count="20" type="stmt"/>
+        <line num="50" count="20" type="stmt"/>
+        <line num="51" count="20" type="stmt"/>
+        <line num="52" count="20" type="stmt"/>
+        <line num="59" count="20" type="stmt"/>
+        <line num="60" count="19" type="cond" truecount="4" falsecount="0"/>
+        <line num="61" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="65" count="3" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="69" count="3" type="stmt"/>
+        <line num="72" count="20" type="stmt"/>
+        <line num="73" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="76" count="20" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="81" count="20" type="stmt"/>
+        <line num="287" count="1" type="stmt"/>
+      </file>
+      <file name="SummaryPage.tsx" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\pages\SummaryPage.tsx">
+        <metrics statements="43" coveredstatements="42" conditionals="36" coveredconditionals="31" methods="8" coveredmethods="7"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="14" type="stmt"/>
+        <line num="29" count="14" type="stmt"/>
+        <line num="30" count="14" type="stmt"/>
+        <line num="31" count="14" type="stmt"/>
+        <line num="32" count="14" type="stmt"/>
+        <line num="33" count="14" type="stmt"/>
+        <line num="35" count="14" type="stmt"/>
+        <line num="36" count="4" type="cond" truecount="5" falsecount="0"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="40" count="3" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="45" count="3" type="stmt"/>
+        <line num="55" count="2" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="74" count="14" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="233" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="236" count="1" type="stmt"/>
+        <line num="237" count="1" type="stmt"/>
+        <line num="238" count="1" type="stmt"/>
+        <line num="239" count="1" type="stmt"/>
+        <line num="240" count="1" type="stmt"/>
+        <line num="245" count="1" type="stmt"/>
+        <line num="311" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.shared.constants">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="fees.constants.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\shared\constants\fees.constants.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.store">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="store.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\store\store.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.store.api">
+      <metrics statements="25" coveredstatements="3" conditionals="4" coveredconditionals="1" methods="11" coveredmethods="1"/>
+      <file name="auth.api.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\store\api\auth.api.ts">
+        <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+      </file>
+      <file name="base.api.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\store\api\base.api.ts">
+        <metrics statements="7" coveredstatements="3" conditionals="4" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="1" count="10" type="stmt"/>
+        <line num="4" count="10" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="18" count="10" type="stmt"/>
+      </file>
+      <file name="products.api.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\store\api\products.api.ts">
+        <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+      </file>
+      <file name="transactions.api.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\store\api\transactions.api.ts">
+        <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.store.slices">
+      <metrics statements="63" coveredstatements="58" conditionals="6" coveredconditionals="3" methods="16" coveredmethods="16"/>
+      <file name="auth.slice.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\store\slices\auth.slice.ts">
+        <metrics statements="27" coveredstatements="24" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="6"/>
+        <line num="1" count="10" type="stmt"/>
+        <line num="19" count="10" type="stmt"/>
+        <line num="20" count="10" type="stmt"/>
+        <line num="21" count="10" type="stmt"/>
+        <line num="22" count="10" type="stmt"/>
+        <line num="23" count="10" type="cond" truecount="2" falsecount="2"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="34" count="10" type="stmt"/>
+        <line num="37" count="10" type="stmt"/>
+        <line num="39" count="10" type="stmt"/>
+        <line num="47" count="6" type="stmt"/>
+        <line num="48" count="6" type="stmt"/>
+        <line num="49" count="6" type="stmt"/>
+        <line num="50" count="6" type="stmt"/>
+        <line num="51" count="6" type="stmt"/>
+        <line num="54" count="3" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="56" count="3" type="stmt"/>
+        <line num="57" count="3" type="stmt"/>
+        <line num="58" count="3" type="stmt"/>
+        <line num="63" count="10" type="stmt"/>
+        <line num="64" count="111" type="stmt"/>
+        <line num="65" count="10" type="stmt"/>
+        <line num="66" count="24" type="stmt"/>
+        <line num="67" count="26" type="stmt"/>
+      </file>
+      <file name="checkout.slice.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\store\slices\checkout.slice.ts">
+        <metrics statements="36" coveredstatements="34" conditionals="2" coveredconditionals="1" methods="10" coveredmethods="10"/>
+        <line num="1" count="10" type="stmt"/>
+        <line num="46" count="10" type="stmt"/>
+        <line num="47" count="10" type="stmt"/>
+        <line num="48" count="10" type="stmt"/>
+        <line num="49" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="55" count="10" type="stmt"/>
+        <line num="64" count="10" type="stmt"/>
+        <line num="65" count="11" type="stmt"/>
+        <line num="68" count="10" type="stmt"/>
+        <line num="70" count="10" type="stmt"/>
+        <line num="75" count="4" type="stmt"/>
+        <line num="76" count="4" type="stmt"/>
+        <line num="77" count="4" type="stmt"/>
+        <line num="83" count="3" type="stmt"/>
+        <line num="84" count="3" type="stmt"/>
+        <line num="85" count="3" type="stmt"/>
+        <line num="86" count="3" type="stmt"/>
+        <line num="89" count="4" type="stmt"/>
+        <line num="90" count="4" type="stmt"/>
+        <line num="91" count="4" type="stmt"/>
+        <line num="94" count="4" type="stmt"/>
+        <line num="95" count="4" type="stmt"/>
+        <line num="96" count="4" type="stmt"/>
+        <line num="97" count="4" type="stmt"/>
+        <line num="98" count="4" type="stmt"/>
+        <line num="99" count="4" type="stmt"/>
+        <line num="104" count="10" type="stmt"/>
+        <line num="111" count="41" type="stmt"/>
+        <line num="112" count="10" type="stmt"/>
+        <line num="113" count="30" type="stmt"/>
+        <line num="114" count="10" type="stmt"/>
+        <line num="115" count="24" type="stmt"/>
+        <line num="116" count="10" type="stmt"/>
+        <line num="117" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.theme">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="theme.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\theme\theme.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="9" type="stmt"/>
+        <line num="3" count="9" type="stmt"/>
+        <line num="192" count="9" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.utils">
+      <metrics statements="23" coveredstatements="23" conditionals="12" coveredconditionals="12" methods="4" coveredmethods="4"/>
+      <file name="currency.util.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\utils\currency.util.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="649" type="stmt"/>
+        <line num="3" count="649" type="stmt"/>
+      </file>
+      <file name="wompi.util.ts" path="C:\Users\Julian\Documents\Julian\P\Vertex Store\frontend\src\utils\wompi.util.ts">
+        <metrics statements="20" coveredstatements="20" conditionals="12" coveredconditionals="12" methods="3" coveredmethods="3"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="36" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="38" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="50" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="61" count="2" type="stmt"/>
+        <line num="62" count="130" type="stmt"/>
+        <line num="63" count="130" type="cond" truecount="2" falsecount="0"/>
+        <line num="64" count="24" type="cond" truecount="2" falsecount="0"/>
+        <line num="65" count="17" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="69" count="47" type="stmt"/>
+        <line num="70" count="47" type="cond" truecount="2" falsecount="0"/>
+        <line num="71" count="47" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
