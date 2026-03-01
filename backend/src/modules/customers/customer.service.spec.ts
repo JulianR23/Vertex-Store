@@ -39,8 +39,8 @@ describe('CustomersService', () => {
     jest.clearAllMocks();
   });
 
-  describe('findOrCreate', () => {
-    it('should return existing customer when email is found', async () => {
+  describe('create', () => {
+    it('should return fail when customer with same email already exists', async () => {
       mockRepository.findOne.mockResolvedValue(mockCustomer);
       const inputDto: CreateCustomerDto = {
         fullName: 'Juan Pérez',
@@ -49,11 +49,11 @@ describe('CustomersService', () => {
         documentNumber: '1234567890',
       };
       const actualResult = await service.create(inputDto);
-      expect(actualResult.isSuccess).toBe(true);
-      if (actualResult.isSuccess) {
-        expect(actualResult.value.id).toBe('cust-uuid-1');
-        expect(mockRepository.create).not.toHaveBeenCalled();
+      expect(actualResult.isSuccess).toBe(false);
+      if (!actualResult.isSuccess) {
+        expect(actualResult.error).toContain('juan@test.com');
       }
+      expect(mockRepository.create).not.toHaveBeenCalled();
     });
 
     it('should create a new customer when email is not found', async () => {
