@@ -43,11 +43,14 @@ export const seedProducts = async (dataSource: DataSource): Promise<void> => {
   for (const data of AIRPODS_PRODUCTS) {
     const existing = await repository.findOneBy({ name: data.name });
     if (existing) {
-      await repository.update(existing.id, data);
-      console.log(`🔄 Updated: ${data.name}`);
+      const { stock, ...dataWithoutStock } = data;
+      await repository.update(existing.id, dataWithoutStock);
+      console.log(
+        `🔄 Updated: ${data.name} (stock preserved: ${existing.stock})`,
+      );
     } else {
       await repository.save(repository.create(data));
-      console.log(`➕ Inserted: ${data.name}`);
+      console.log(`➕ Inserted: ${data.name} (stock: ${data.stock})`);
     }
   }
 

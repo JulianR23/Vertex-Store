@@ -19,6 +19,10 @@ import { selectCustomer } from "../store/slices/auth.slice";
 import { useCreateTransactionMutation } from "../store/api/transactions.api";
 import AppLayout from "../components/layout/AppLayout";
 import { formatCOP } from "../utils/currency.util";
+import {
+  BASE_FEE_IN_CENTS,
+  DELIVERY_FEE_IN_CENTS,
+} from "../shared/constants/fees.constants";
 
 const SummaryPage = () => {
   const navigate = useNavigate();
@@ -186,7 +190,9 @@ const SummaryPage = () => {
               <Typography variant="body2" color="text.secondary">
                 Base fee
               </Typography>
-              <Typography variant="body2">{formatCOP(300000)}</Typography>
+              <Typography variant="body2">
+                {formatCOP(BASE_FEE_IN_CENTS)}
+              </Typography>
             </Box>
             <Box
               sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
@@ -194,7 +200,9 @@ const SummaryPage = () => {
               <Typography variant="body2" color="text.secondary">
                 Shipping
               </Typography>
-              <Typography variant="body2">{formatCOP(200000)}</Typography>
+              <Typography variant="body2">
+                {formatCOP(DELIVERY_FEE_IN_CENTS)}
+              </Typography>
             </Box>
             <Divider sx={{ mb: 2 }} />
             <Box
@@ -213,8 +221,8 @@ const SummaryPage = () => {
               <Typography variant="h6" fontWeight={700}>
                 {formatCOP(
                   (checkout.selectedProduct?.priceInCents ?? 0) +
-                    300000 +
-                    200000,
+                    BASE_FEE_IN_CENTS +
+                    DELIVERY_FEE_IN_CENTS,
                 )}
               </Typography>
             </Box>
@@ -223,13 +231,13 @@ const SummaryPage = () => {
               (() => {
                 const totalCents =
                   (checkout.selectedProduct?.priceInCents ?? 0) +
-                  300000 +
-                  200000;
+                  BASE_FEE_IN_CENTS +
+                  DELIVERY_FEE_IN_CENTS;
                 const installments = checkout.card!.installments;
                 const perInstallment = Math.ceil(totalCents / installments);
                 const nextDate = new Date();
                 nextDate.setMonth(nextDate.getMonth() + 1);
-                const nextDateStr = nextDate.toLocaleDateString("es-CO", {
+                const nextDateStr = nextDate.toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
@@ -244,7 +252,7 @@ const SummaryPage = () => {
                     }}
                   >
                     <Typography variant="body2" fontWeight={700} sx={{ mb: 1 }}>
-                      Detalles de cuotas
+                      Installment details
                     </Typography>
                     <Box
                       sx={{
@@ -254,7 +262,7 @@ const SummaryPage = () => {
                       }}
                     >
                       <Typography variant="body2" color="text.secondary">
-                        Valor por cuota
+                        Amount per installment
                       </Typography>
                       <Typography variant="body2" fontWeight={600}>
                         {formatCOP(perInstallment)}
@@ -264,7 +272,7 @@ const SummaryPage = () => {
                       sx={{ display: "flex", justifyContent: "space-between" }}
                     >
                       <Typography variant="body2" color="text.secondary">
-                        Próxima cuota
+                        Next installment
                       </Typography>
                       <Typography variant="body2" fontWeight={600}>
                         {nextDateStr}
@@ -290,9 +298,9 @@ const SummaryPage = () => {
               <span>Processing payment...</span>
             </Box>
           ) : checkout.card?.installments && checkout.card.installments > 1 ? (
-            `Pay ${formatCOP(Math.ceil(((checkout.selectedProduct?.priceInCents ?? 0) + 300000 + 200000) / checkout.card.installments))} · ${checkout.card.installments}x cuotas`
+            `Pay ${formatCOP(Math.ceil(((checkout.selectedProduct?.priceInCents ?? 0) + BASE_FEE_IN_CENTS + DELIVERY_FEE_IN_CENTS) / checkout.card.installments))} · ${checkout.card.installments}x installments`
           ) : (
-            `Pay ${formatCOP((checkout.selectedProduct?.priceInCents ?? 0) + 300000 + 200000)}`
+            `Pay ${formatCOP((checkout.selectedProduct?.priceInCents ?? 0) + BASE_FEE_IN_CENTS + DELIVERY_FEE_IN_CENTS)}`
           )}
         </Button>
       </Box>

@@ -28,6 +28,10 @@ import {
   formatCardNumber,
 } from "../utils/wompi.util";
 import { formatCOP } from "../utils/currency.util";
+import {
+  BASE_FEE_IN_CENTS,
+  DELIVERY_FEE_IN_CENTS,
+} from "../shared/constants/fees.constants";
 
 const INSTALLMENT_OPTIONS = [1, 3, 6, 12, 24, 36];
 
@@ -59,8 +63,12 @@ const CheckoutPage = () => {
 
   const handleCardChange =
     (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value =
-        field === "number" ? formatCardNumber(e.target.value) : e.target.value;
+      let value = e.target.value;
+      if (field === "number") {
+        value = formatCardNumber(value);
+      } else if (["expMonth", "expYear", "cvc"].includes(field)) {
+        value = value.replace(/\D/g, "");
+      }
       setCard((prev) => ({ ...prev, [field]: value }));
     };
 
@@ -70,11 +78,23 @@ const CheckoutPage = () => {
     };
 
   const isCardValid = (): boolean => {
+    const month = parseInt(card.expMonth, 10);
+    const year = parseInt(card.expYear, 10);
+    const now = new Date();
+    const currentYear = now.getFullYear() % 100;
+    const currentMonth = now.getMonth() + 1;
+
+    const isMonthValid =
+      card.expMonth.length === 2 && month >= 1 && month <= 12;
+    const isYearValid = card.expYear.length === 2 && year >= currentYear;
+    const isNotExpired =
+      isYearValid && (year > currentYear || month >= currentMonth);
+
     return (
       card.number.replace(/\s/g, "").length >= 13 &&
       card.cardHolder.length >= 2 &&
-      card.expMonth.length === 2 &&
-      card.expYear.length === 2 &&
+      isMonthValid &&
+      isNotExpired &&
       card.cvc.length >= 3
     );
   };
@@ -89,7 +109,25 @@ const CheckoutPage = () => {
 
   const handleContinue = async () => {
     if (!isCardValid()) {
-      setError("Please fill in the card details correctly");
+      const month = parseInt(card.expMonth, 10);
+      const year = parseInt(card.expYear, 10);
+      const now = new Date();
+      const currentYear = now.getFullYear() % 100;
+      const currentMonth = now.getMonth() + 1;
+
+      if (card.expMonth.length === 2 && (month < 1 || month > 12)) {
+        setError("Invalid month. Must be between 01 and 12");
+      } else if (
+        card.expYear.length === 2 &&
+        card.expMonth.length === 2 &&
+        month >= 1 &&
+        month <= 12 &&
+        (year < currentYear || (year === currentYear && month < currentMonth))
+      ) {
+        setError("Your card is expired");
+      } else {
+        setError("Please fill in the card details correctly");
+      }
       return;
     }
     if (!isDeliveryValid()) {
@@ -283,7 +321,9 @@ const CheckoutPage = () => {
                       <Typography variant="body1" fontWeight={700}>
                         {formatCOP(
                           Math.ceil(
-                            ((product?.priceInCents ?? 0) + 300000 + 200000) /
+                            ((product?.priceInCents ?? 0) +
+                              BASE_FEE_IN_CENTS +
+                              DELIVERY_FEE_IN_CENTS) /
                               card.installments,
                           ),
                         )}
@@ -379,7 +419,9 @@ const CheckoutPage = () => {
                 <Typography variant="body2" color="text.secondary">
                   Base fee
                 </Typography>
-                <Typography variant="body2">{formatCOP(3000000)}</Typography>
+                <Typography variant="body2">
+                  {formatCOP(BASE_FEE_IN_CENTS)}
+                </Typography>
               </Box>
               <Box
                 sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
@@ -387,7 +429,9 @@ const CheckoutPage = () => {
                 <Typography variant="body2" color="text.secondary">
                   Shipping
                 </Typography>
-                <Typography variant="body2">{formatCOP(2000000)}</Typography>
+                <Typography variant="body2">
+                  {formatCOP(DELIVERY_FEE_IN_CENTS)}
+                </Typography>
               </Box>
               <Divider sx={{ mb: 2 }} />
               <Box
@@ -397,7 +441,11 @@ const CheckoutPage = () => {
                   Total
                 </Typography>
                 <Typography variant="h6" fontWeight={700}>
-                  {formatCOP((product?.priceInCents ?? 0) + 3000000 + 2000000)}
+                  {formatCOP(
+                    (product?.priceInCents ?? 0) +
+                      BASE_FEE_IN_CENTS +
+                      DELIVERY_FEE_IN_CENTS,
+                  )}
                 </Typography>
               </Box>
               <Button

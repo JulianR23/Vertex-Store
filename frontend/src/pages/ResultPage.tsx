@@ -49,7 +49,7 @@ const ResultPage = () => {
   const nextInstallmentDate = (() => {
     const d = new Date();
     d.setMonth(d.getMonth() + 1);
-    return d.toLocaleDateString("es-CO", {
+    return d.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -218,7 +218,7 @@ const ResultPage = () => {
                     }}
                   >
                     <Typography variant="body2" fontWeight={700} sx={{ mb: 1 }}>
-                      Próximos pagos
+                      Upcoming payments
                     </Typography>
                     <Box
                       sx={{
@@ -228,10 +228,10 @@ const ResultPage = () => {
                       }}
                     >
                       <Typography variant="body2" color="text.secondary">
-                        Cuotas restantes
+                        Remaining installments
                       </Typography>
                       <Typography variant="body2" fontWeight={600}>
-                        {installments - 1} de {installments}
+                        {installments - 1} of {installments}
                       </Typography>
                     </Box>
                     <Box
@@ -242,7 +242,7 @@ const ResultPage = () => {
                       }}
                     >
                       <Typography variant="body2" color="text.secondary">
-                        Valor por cuota
+                        Amount per installment
                       </Typography>
                       <Typography variant="body2" fontWeight={600}>
                         {formatCOP(
@@ -257,7 +257,7 @@ const ResultPage = () => {
                       sx={{ display: "flex", justifyContent: "space-between" }}
                     >
                       <Typography variant="body2" color="text.secondary">
-                        Próxima cuota
+                        Next installment
                       </Typography>
                       <Typography variant="body2" fontWeight={600}>
                         {nextInstallmentDate}
