@@ -32,6 +32,7 @@ interface TransactionSnapshot {
   readonly baseFeeInCents: number;
   readonly deliveryFeeInCents: number;
   readonly productAmountInCents: number;
+  readonly installments: number;
 }
 
 interface CheckoutState {

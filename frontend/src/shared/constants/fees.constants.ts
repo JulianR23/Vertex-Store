@@ -1,0 +1,2 @@
+export const BASE_FEE_IN_CENTS = 3000000;
+export const DELIVERY_FEE_IN_CENTS = 2000000;
