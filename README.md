@@ -227,6 +227,21 @@ erDiagram
 
 Base URL: `{API_HOST}/api/v1`
 
+### Postman Collection
+
+A complete Postman collection with all API endpoints, examples, and environment variables is available in the repository:
+
+📁 **[Vertex.postman_collection.json](Vertex.postman_collection.json)**
+
+To use it:
+
+1. Open Postman
+2. Click **Import** → **Upload Files**
+3. Select `Vertex.postman_collection.json`
+4. Configure the environment variables (`API_HOST`, `ACCESS_TOKEN`)
+
+---
+
 All successful responses are wrapped in:
 
 ```json

@@ -1,0 +1,516 @@
+{
+  "info": {
+    "_postman_id": "fb572ab7-20f8-450d-a878-7b2d72384e72",
+    "name": "Vertex",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31104001"
+  },
+  "item": [
+    {
+      "name": "transactions",
+      "item": [
+        {
+          "name": "create transactions",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": \"77e9b98f-e88b-4f35-8f08-55d2cfd67a15\",\r\n  \"customer\": {\r\n    \"fullName\": \"John Doe\",\r\n    \"email\": \"john@example.com\",\r\n    \"phoneNumber\": \"3001234567\",\r\n    \"documentNumber\": \"123456789\"\r\n  },\r\n  \"card\": {\r\n    \"cardNumber\": \"4111111111111111\",\r\n    \"cardHolder\": \"JOHN DOE\",\r\n    \"expiryMonth\": \"12\",\r\n    \"expiryYear\": \"2027\",\r\n    \"cvv\": \"123\"\r\n  },\r\n  \"delivery\": {\r\n    \"addressLine\": \"Calle 123 # 45-67\",\r\n    \"city\": \"Bogotá\",\r\n    \"department\": \"Cundinamarca\",\r\n    \"postalCode\": \"110111\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/transactions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update status transaction",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"FAILED\",\r\n  \"wompiTransactionId\": \"wompi-tx-id\",\r\n  \"failureReason\": null\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/transactions/2218bd12-2b71-4508-888c-e1b7ba24ef49/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "transactions",
+                "2218bd12-2b71-4508-888c-e1b7ba24ef49",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get transaction by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/transactions/2218bd12-2b71-4508-888c-e1b7ba24ef49",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "transactions",
+                "2218bd12-2b71-4508-888c-e1b7ba24ef49"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "find all products",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get products by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/products/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "products",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "f3c9ebd6-1f0e-4944-8746-06beb75f8377"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Deliveries",
+      "item": [
+        {
+          "name": "get deliveries by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/deliveries/08eff593-21ed-4653-a635-cbb847adfb0f",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "deliveries",
+                "08eff593-21ed-4653-a635-cbb847adfb0f"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get delivery by id for transaction",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/deliveries/by-transaction/:TRANSACTIONID",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "deliveries",
+                "by-transaction",
+                ":TRANSACTIONID"
+              ],
+              "variable": [
+                {
+                  "key": "TRANSACTIONID",
+                  "value": "2218bd12-2b71-4508-888c-e1b7ba24ef49"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "customers",
+      "item": [
+        {
+          "name": "Get customer by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/customers/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "15a88c3f-102a-4cd2-8f60-4967ded9f0ff"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create customer",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"fullName\": \"John Doe\",\r\n  \"email\": \"john.doe@example.com\",\r\n  \"phoneNumber\": \"3001234567\",\r\n  \"documentNumber\": \"123456789\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/customers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "",
+                  "if (jsonData.accessToken) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.accessToken);",
+                  "    console.log(\"accessToken saved to collection variables\");",
+                  "} else if (jsonData.access_token) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.access_token);",
+                  "    console.log(\"access_token saved to collection variables\");",
+                  "} else if (jsonData.token) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.token);",
+                  "    console.log(\"token saved to collection variables\");",
+                  "} else if (jsonData.data && jsonData.data.accessToken) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.data.accessToken);",
+                  "    console.log(\"data.accessToken saved to collection variables\");",
+                  "} else if (jsonData.data && jsonData.data.access_token) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.data.access_token);",
+                  "    console.log(\"data.access_token saved to collection variables\");",
+                  "} else if (jsonData.data && jsonData.data.token) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.data.token);",
+                  "    console.log(\"data.token saved to collection variables\");",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"fullName\": \"Julian\",\r\n  \"email\": \"julian@test.com\",\r\n  \"phoneNumber\": \"+573001234567\",\r\n  \"documentNumber\": \"1234567890\",\r\n  \"password\": \"password123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonData = pm.response.json();",
+                  "",
+                  "if (jsonData.accessToken) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.accessToken);",
+                  "    console.log(\"accessToken saved to collection variables\");",
+                  "} else if (jsonData.access_token) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.access_token);",
+                  "    console.log(\"access_token saved to collection variables\");",
+                  "} else if (jsonData.token) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.token);",
+                  "    console.log(\"token saved to collection variables\");",
+                  "} else if (jsonData.data && jsonData.data.accessToken) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.data.accessToken);",
+                  "    console.log(\"data.accessToken saved to collection variables\");",
+                  "} else if (jsonData.data && jsonData.data.access_token) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.data.access_token);",
+                  "    console.log(\"data.access_token saved to collection variables\");",
+                  "} else if (jsonData.data && jsonData.data.token) {",
+                  "    pm.collectionVariables.set(\"accessToken\", jsonData.data.token);",
+                  "    console.log(\"data.token saved to collection variables\");",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"julian@test.com\",\r\n    \"password\": \"password123\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Wompi",
+      "item": [
+        {
+          "name": "Tokenizar tarjeta",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://sandbox.wompi.co/v1/tokens/cards",
+              "protocol": "https",
+              "host": [
+                "sandbox",
+                "wompi",
+                "co"
+              ],
+              "path": [
+                "v1",
+                "tokens",
+                "cards"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "accessToken",
+      "value": ""
+    }
+  ]
+}
