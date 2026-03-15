@@ -722,9 +722,3 @@ The application implements several security best practices aligned with **OWASP*
 | **SQL Injection**         | Prevented by TypeORM parameterized queries                                                          |
 | **Global Error Handler**  | Internal errors return generic messages; stack traces are never exposed to clients                  |
 | **Transaction Integrity** | Database transactions with rollback on failure                                                      |
-
----
-
-## License
-
-This project was built as a technical assessment.
